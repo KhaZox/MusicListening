@@ -1,0 +1,172 @@
+<form name="container-form" method="POST" action="/youtube/handle-form-actions" class="container mt-5" style="position: relative; top: 40px; left:0">
+    <div class="text-center">
+        <h1>VIDEO CỦA TÔI</h1>
+        {{#if deletedCountt}}
+        <a href="/me/trash/videos" class="text-primary">
+          <ion-icon name="trash-outline"></ion-icon>
+          Video đã xóa {{deletedCountt}}
+        </a>
+        {{/if}}
+    </div>
+    <div class="d-flex justify-content-center align-items-center">
+      <div class="mt-4 d-flex flex-row mb-3" style="margin-left: 22px; flex: 1">
+          <div class="form-check p-2" style="flex-basis: 120px;">
+              <input class="form-check-input" type="checkbox" value="" id="checkbox-all">
+              <label  class="form-check-label" for="checkbox-all">
+                  Chọn tất cả
+              </label>
+          </div>
+          <select class="form-select selection text-center p-2" name="action" aria-label="Default select example" required style="flex-basis: 255px;"> 
+              <option value=""> --Hành động-- </option>
+              <option value="delete">Xóa</option>
+          </select>
+          <button type="button" id="btn-action" class="btn btn-primary disabled p-2" style="margin-left: 10px;">Thực hiện</button>
+      </div>
+      <input id="ip-search" type="text" placeholder="Search..." style="padding: 6px; border-radius: 6px;">
+    </div>
+    <table class="table mt-4">
+        <thead>
+            <tr>
+                <th scope="col"></th>
+                <th scope="col">STT</th>
+                <th scope="col">
+                  Tên Video
+                  {{!-- {{{sortable 'title' _sort}}} --}}
+                </th>
+                <th scope="col">
+                  Author
+                  {{!-- {{{sortable 'author' _sort}}} --}}
+                </th>
+                <th scope="col">
+                  Thời gian tạo
+                  {{!-- {{{sortable 'createdAt' _sort}}}   --}}
+                </th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each youtube}}
+            <tr>
+                <th>
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" name="videoId[]" value="{{this._id}}" id="">
+                  </div>
+                </th>
+                <th scope="row">{{sum @index 1}}</th>
+                <td>{{this.title}}</td>
+                <td>{{this.author}}</td>
+                <td>{{this.createdAt}}</td>
+                <td>
+                    <a href="/youtube/{{this._id}}/edit" class="btn btn-link" type="button">Sửa</a>
+                    <a class="btn btn-link" type="button" data-bs-toggle="modal" data-bs-id="{{this._id}}" data-bs-target="#delete-video-modal">Xóa</a>
+                </td>
+                </tr>
+            <tr>
+            {{else}}
+            <tr class="text-center ">
+              <td colspan="5">Bạn chưa có video nào
+                <a href="/youtube/create" class="text-primary">Tạo video ngay</a>
+              </td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</form>
+
+
+{{!-- Modal delete video --}}
+<div class="modal" id="delete-video-modal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Thông báo</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>Bạn có muốn xóa video</p>
+      </div>
+      <div class="modal-footer">
+        <button id="btn-delete-video" type="button" class="btn btn-danger">Xóa</button>
+        <button  type="button" class="btn btn-primary" data-bs-dismiss="modal">Hủy</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+{{!-- Delete hiddenForm --}}
+<form id="form-delte" method="POST"></form>
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded',function(){
+        var videoId;
+        var formDeleteSubmit= document.forms['form-delte'];
+        var formContainer= document.forms['container-form']
+        var btnDeleteCourse= document.getElementById('btn-delete-video');
+        const deleteModal = document.getElementById('delete-video-modal');
+        var checkboxAll=$('#checkbox-all')
+        var videoItemCheckbox= $('input[name="videoId[]"]')
+        var btnAction= $("#btn-action")
+
+        if (deleteModal) {
+        deleteModal.addEventListener('show.bs.modal', function (event) {
+            const button = event.relatedTarget
+            videoId = button.getAttribute('data-bs-id')
+        })}
+
+        btnDeleteCourse.onclick=function(){
+            formDeleteSubmit.action='/youtube/'+ videoId +'?_method=DELETE';
+            formDeleteSubmit.submit();
+        }
+
+        //check all on checkbox
+        checkboxAll.change(function(){
+          var isChecked= $(this).prop('checked')
+          videoItemCheckbox.prop('checked',isChecked)
+          reRenderBtn()
+        })
+
+        //Course item checkbox change
+        videoItemCheckbox.change(function(){
+          var isChecked= videoItemCheckbox.length === $('input[name="videoId[]"]:checked').length
+          checkboxAll.prop('checked',isChecked)
+          reRenderBtn()
+        })
+
+        //submit
+        {{!-- btnAction.on('submit',function(e){
+          var isSubmitTable= !$(this).hasClass('disabled')
+          if(!isSubmitTable){
+            e.preventDefault()
+          }
+        }) --}}
+        btnAction.click(function(e){
+          e.preventDefault()
+          var isSubmitTable= !$(this).hasClass('disabled')
+          if(isSubmitTable){
+            formContainer.submit()
+          }
+        })
+
+        //Rerender btn
+        function reRenderBtn(){
+          var checkCount = $('input[name="videoId[]"]:checked').length
+          if(checkCount > 0){
+            btnAction.removeClass('disabled')
+          }
+          else{
+            btnAction.addClass('disabled')
+          }
+        }
+    })
+
+    //search
+  $(document).ready(function(){
+      $("#ip-search").on("keyup", function() {
+        var value = $(this).val().toLowerCase();
+        $(".table tr").filter(function() {
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        });
+      });
+  });
+</script>

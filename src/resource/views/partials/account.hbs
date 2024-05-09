@@ -1,0 +1,32 @@
+<a href="{{href}}">
+    <div class="account-mes">
+        <span class="icon">{{{icon}}}</span>
+        <span class="text">{{message}}</span>
+    </div>
+    {{#if subAccount}}
+        <div class="account-mes">
+            <span class="icon">{{{icon}}}</span>
+            <span class="text">{{message}}</span>
+        </div>
+    {{/if}}
+</a>
+<style>
+    .account-mes{
+        display: flex;
+        align-items: center;
+        height:40px;
+        padding: 0 36px 0 16px;
+        font-size: 14px;
+        color: #0f0f0f;
+        .icon{
+            margin-right: 16px;
+            font-size: 24px;
+        }
+        .text{
+            flex: 1;
+        }
+        &:hover{
+            background-color: #f2f2f2;
+        }
+    }
+</style>

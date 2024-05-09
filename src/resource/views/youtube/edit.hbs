@@ -1,0 +1,28 @@
+<div class="mt-4" style="position: relative; top:40px; left:0">
+    <div class="container">
+        <h1 class="text-center">Cập nhật Video</h1>
+        <form method="POST" action="/youtube/{{youtube._id}}?_method=PUT">
+            <div class="mb-3">
+                <label for="title" class="form-label">Tên tiêu đề</label>
+                <input type="text" class="form-control" id="title" name="title" value="{{youtube.title}}" >
+            </div>
+            <div class="mb-3">
+                <label for="author" class="form-label">Tên tác giả</label>
+                <input type="text" class="form-control" id="author" name="author"value="{{youtube.author}}" >
+            </div>
+            <div class="mb-3">
+                <label for="logo" class="form-label">Avatar Author</label>
+                <input type="text" class="form-control" id="logo" name="logo" value="{{youtube.logo}}" >
+            </div>
+            <div class="mb-3">
+                <label for="img" class="form-label">Hình ảnh video</label>
+                <input type="text" class="form-control" id="img" name="img" value="{{youtube.img}}">
+            </div>
+            <div class="mb-3">
+                <label for="videoID" class="form-label">VideoID</label>
+                <input type="text" class="form-control" id="videoID" name="videoID" value="{{youtube.videoID}}">
+            </div>
+            <button type="submit" class="btn btn-primary">Cập nhật</button>
+        </form>
+    </div>
+</div>

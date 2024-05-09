@@ -1,0 +1,28 @@
+<div class="mt-4" style="position: relative; top:40px; left:0">
+    <div class="container">
+        <h1 class="text-center">ĐĂNG VIDEO</h1>
+        <form method="POST" action="/youtube/store">
+            <div class="mb-3">
+                <label for="title" class="form-label">Tên tiêu đề</label>
+                <input type="text" class="form-control" id="title" name="title" >
+            </div>
+            <div class="mb-3">
+                <label for="author" class="form-label">Tên tác giả</label>
+                <input type="text" class="form-control" id="author" name="author" >
+            </div>
+            <div class="mb-3">
+                <label for="logo" class="form-label">Avatar Author</label>
+                <input type="text" class="form-control" id="logo" name="logo" >
+            </div>
+            <div class="mb-3">
+                <label for="img" class="form-label">Hình ảnh video</label>
+                <input type="text" class="form-control" id="img" name="img" >
+            </div>
+            <div class="mb-3">
+                <label for="videoID" class="form-label">VideoID</label>
+                <input type="text" class="form-control" id="videoID" name="videoID">
+            </div>
+            <button type="submit" class="btn btn-primary">Thêm video</button>
+        </form>
+    </div>
+</div>

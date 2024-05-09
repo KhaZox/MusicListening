@@ -1,0 +1,16 @@
+<div class="message">
+    {{#if title}}
+        <a href="{{href}}">
+            <div class="wrapper-message">
+                <span class="title">{{{messageTitle}}}</span>
+            </div>
+        </a>
+    {{else}}
+        <a href="{{href}}">
+            <div class="wrapper-message">
+                <span class="icon">{{{icon}}}</span>
+                <span class="text">{{message}}</span>
+            </div>
+        </a>
+    {{/if}}
+</div>

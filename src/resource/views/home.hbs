@@ -1,0 +1,147 @@
+<div class="container-fluid text-center" style="position: relative; top:40px; left:0; right:0">
+  <div class="row">
+    <div class="col-lg-2 col-md-1 message-list" style="">
+        {{!-- <div class="message-list"> --}}
+            {{#each dataSlide}}
+                {{> listItem icon=this.icon message=this.message href=this.href messageTitle=this.messageTitle line=this.line}}
+            {{/each}}
+        {{!-- </div> --}}
+        <div>
+            <a  >
+                <p class="listItem-description text-start">Giới thiệu Báo chí Bản quyền Liên hệ với chúng tô iNgười sáng tạo Quảng cáo Nhà phát triển
+                    Điều khoản Quyền riêng tư Chính sách và an toàn Cách YouTube hoạt động Thử các tính năng mới</p>
+            </a>
+        </div>
+    </div>
+    <div class="col-lg-10 col-md-11 col-sm-12" style="position: relative; left:230px;" >
+        <div class="mt-4 container">
+            <div class="wrapper-select" style="width: 100%">
+                <div class="icon hide">
+                <span>
+                    <ion-icon class="left-arrow" name="chevron-back-outline"></ion-icon>
+                </span>
+                </div>
+                <ul class="select-type-vieo-list ">
+                    <li class="select-type-vieo-item">
+                            <a class="custom-active select-type-vieo-link" aria-current="page" href="#">Tất cả</a>
+                    </li>
+                    <li class="select-type-vieo-item">
+                        <a class="select-type-vieo-link" href="#">Âm nhạc</a>
+                    </li>
+                    <li class="select-type-vieo-item">
+                        <a class="select-type-vieo-link" href="#">Danh sách kết hợp</a>
+                    </li>
+                    <li class="select-type-vieo-item">
+                        <a class="select-type-vieo-link" href="#">Trực tiếp</a>
+                    </li>
+                    <li class="select-type-vieo-item">
+                        <a class="select-type-vieo-link" href="#">Trò chơi</a>
+                    </li>
+                    <li class="select-type-vieo-item">
+                        <a class="select-type-vieo-link" href="#">Toán học</a>
+                    </li>
+                    <li class="select-type-vieo-item">
+                        <a class="select-type-vieo-link" href="#">Đọc rap</a>
+                    </li>
+                    <li class="select-type-vieo-item">
+                        <a class="select-type-vieo-link" href="#">Hoạt hình</a>
+                    </li>
+                    <li class="select-type-vieo-item">
+                        <a class="select-type-vieo-link" href="#">Bóng đá</a>
+                    </li>
+                    <li class="select-type-vieo-item">
+                        <a class="select-type-vieo-link" href="#">Mới tải lên gần đây</a>
+                    </li>
+                    <li class="select-type-vieo-item">
+                        <a class="select-type-vieo-link" href="#">Đã xem</a>
+                    </li>
+                    <li class="select-type-vieo-item">
+                        <a class="select-type-vieo-link" href="#">Đề xuất mới</a>
+                    </li>
+                </ul>
+                <div class="icon">
+                <span>
+                    <ion-icon class="right-arrow" name="chevron-forward-outline"></ion-icon>
+                </span>
+                </div>
+            </div>
+            <div class="row mt-4">
+                {{#each youtube}}
+                <div class="col-sm-6 col-lg-4" style="padding: 0 9px;">
+                    <div class="card custom-card" style="width: 100%;">
+                        <a href="/youtube/watch/{{this.slug}}">
+                            {{!-- <iframe class="card-img-top custom-card-img" id="video-youtube" width="560" height="315" src="https://www.youtube.com/embed/{{this.videoID}}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe> --}}
+                            <img src="{{this.img}}" class="card-img-top custom-card-img" alt="...">
+                        </a>
+                        <div class="card-body custom-card-body">
+                            <div class="wrapper-card">
+                                <img class="logo-author" src="{{this.logo}}" alt="">
+                                <div>
+                                    <a href="/youtube/watch/{{this.slug}}">
+                                        <h5 class="card-title custom-card-title">{{this.title}}</h5>
+                                        <p class="description">{{this.author}}</p>
+                                        <p class="description">{{this.author}}</p>
+                                        {{!-- <p class="card-text custom-card-text">{{this.author}}</p> --}}
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {{/each}}
+            </div>
+        </div>
+    </div>
+  </div>
+</div>
+<script>
+    {{!-- // Lấy phần tử video iframe
+    const video= document.getElementById('#video-youtube')
+
+    // Khi hover vào video
+    video.addEventListener('mouseenter', function() {
+        var videoSrc = this.getAttribute('src');
+        this.setAttribute('src', videoSrc + '?autoplay=1');
+    });
+
+    video.addEventListener('mouseleave', function() {
+        var videoSrc = this.getAttribute('src');
+        videoSrc = videoSrc.replace('?autoplay=1', '');
+        this.setAttribute('src', videoSrc);
+    }); --}}
+
+    const iLeft= document.querySelector('.left-arrow'),
+        iRight= document.querySelector('.right-arrow'),
+        tab= document.querySelector('.select-type-vieo-list'),
+        bages= document.querySelectorAll('.select-type-vieo-link'),
+        icon= document.querySelectorAll('.icon span'),
+        {clientWidth, scrollWidth}= tab
+
+    bages.forEach(bage=>{
+        bage.addEventListener("click", () =>{
+        bages.forEach(item=>{
+            item.classList.remove('custom-active')
+        })
+        bage.classList.add('custom-active')
+        bage.scrollIntoView({
+            inline:'center',
+            block: "nearest",
+            behavior: "smooth"
+        })
+        })
+    })
+    iLeft.addEventListener("click",()=>{
+        tab.scrollLeft -=100
+    })
+    iRight.addEventListener("click",()=>{
+        tab.scrollLeft +=100
+    })
+
+    tab.addEventListener('scroll',(e)=>{
+        updateIcon(e.target.scrollLeft)
+    })
+    function updateIcon(srolledWidth){
+        icon[0].parentElement.classList.toggle('hide', srolledWidth <=1)
+        icon[1].parentElement.classList.toggle('hide', scrollWidth-(clientWidth + srolledWidth) <=1)
+    }
+</script>
